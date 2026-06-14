@@ -81,6 +81,8 @@ build time (see `src/content-assets.js`).
 - `src/components/Footer.jsx` — footer (blue background, white text,
   `id="contact"`) showing contact info from `content/textes/contact.md`. Contact
   is intentionally NOT in `App.jsx`'s section list — it lives only in the footer.
+  Also renders a clickable Instagram icon (inline SVG) linking to `INSTAGRAM_URL`
+  (a constant here — site identity, like `CLUB_NAME`; change it here if it moves).
 - `src/components/Markdown.jsx` — renders markdown via `react-markdown`
   (+ `remark-gfm` for tables/lists, + `rehype-raw` so `<video>`/`<img>` HTML
   works). Image/video `src` values are resolved by filename via `mediaUrl`; `<a>`

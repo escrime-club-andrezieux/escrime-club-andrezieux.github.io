@@ -355,6 +355,27 @@ body {
   color: var(--color-white);
 }
 
+/* Lien réseau social (icône cliquable + identifiant) dans le pied de page. */
+.site-footer .social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-footer .social-icon {
+  width: 1.7rem;
+  height: 1.7rem;
+  flex: 0 0 auto;
+}
+
+.site-footer .social-link:hover,
+.site-footer .social-link:focus-visible {
+  text-decoration: underline;
+}
+
 @media (max-width: 600px) {
   :root {
     --section-padding: 2.5rem 1.25rem;
