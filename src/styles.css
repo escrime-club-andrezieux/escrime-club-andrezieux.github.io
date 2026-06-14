@@ -201,6 +201,26 @@ body {
   margin: 0;
 }
 
+/* Visuels d'horaires (emploi du temps, stages) : ce sont des documents à LIRE,
+   donc affichés EN ENTIER (jamais rognés), à leur proportion d'origine. Côte à
+   côte sur grand écran, empilés sur mobile. */
+.section-inner .schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding-inline: 1.5rem;
+  align-items: start;
+}
+
+.section-inner .schedule-grid img {
+  width: 100%;
+  height: auto; /* proportion naturelle conservée : rien n'est coupé */
+  margin: 0;
+}
+
 /* --- Bouton de téléchargement (ex. flyer PDF) --- */
 .section-inner .download-button {
   display: inline-block;
