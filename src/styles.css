@@ -237,6 +237,68 @@ body {
   flex-grow: 1.78; /* 2e visuel : stages (1600 x 900 = 16/9) */
 }
 
+/* Petite indication sous les visuels (ex. « cliquez pour agrandir »). */
+.section-inner .hint {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.7;
+  text-align: center;
+}
+
+/* Images agrandissables au clic : curseur loupe. */
+.section-inner .schedule-grid img,
+.section-inner img.zoomable {
+  cursor: zoom-in;
+}
+
+/* --- Overlay plein écran (lightbox) pour lire une image en grand --- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000; /* au-dessus de la barre de menu collante */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: zoom-out;
+}
+
+.lightbox-img {
+  max-width: 95vw;
+  max-height: 95vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  cursor: default;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--color-white);
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus-visible {
+  background: rgba(255, 255, 255, 0.2);
+}
+
 /* --- Bouton de téléchargement (ex. flyer PDF) --- */
 .section-inner .download-button {
   display: inline-block;

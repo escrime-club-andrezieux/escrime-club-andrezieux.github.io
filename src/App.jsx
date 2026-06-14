@@ -4,6 +4,7 @@ import Section from './components/Section.jsx'
 import Video from './components/Video.jsx'
 import Slideshow from './components/Slideshow.jsx'
 import Footer from './components/Footer.jsx'
+import Lightbox from './components/Lightbox.jsx'
 
 // Page order, top to bottom. Each <Section name="x" /> renders content/x.md.
 // To reorder, add, or remove a section, edit the list below — this is the
@@ -27,6 +28,7 @@ export default function App() {
         <Section name="escrime-entreprise" />
       </main>
       <Footer />
+      <Lightbox />
     </div>
   )
 }

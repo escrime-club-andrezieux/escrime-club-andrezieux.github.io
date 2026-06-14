@@ -75,6 +75,15 @@ Un paragraphe normal. **En gras**, *en italique*.
 
 Ajoutez ou retirez des lignes `<img ... />` ; la disposition s'ajuste seule.
 
+**Agrandir une photo au clic** : ajoutez `class="zoomable"` à une image pour
+qu'elle s'ouvre en grand (overlay) quand on clique dessus :
+
+```html
+<img src="ma-photo.jpg" alt="Description" class="zoomable" />
+```
+
+(Les visuels de la section Horaires sont déjà agrandissables au clic.)
+
 ## 4. Le diaporama — `diaporama/`
 
 Toutes les images du dossier **`content/diaporama/`** défilent automatiquement,

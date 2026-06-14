@@ -83,6 +83,10 @@ build time (see `src/content-assets.js`).
   is intentionally NOT in `App.jsx`'s section list — it lives only in the footer.
   Also renders a clickable Instagram icon (inline SVG) linking to `INSTAGRAM_URL`
   (a constant here — site identity, like `CLUB_NAME`; change it here if it moves).
+- `src/components/Lightbox.jsx` — click-to-enlarge overlay (no deps). Rendered
+  once in `App.jsx`; uses a document-level click listener (delegation) so it
+  works with markdown-rendered images. Triggers for images in `.schedule-grid`
+  or any `img.zoomable`. Closes on backdrop click, the × button, or Esc.
 - `src/components/Markdown.jsx` — renders markdown via `react-markdown`
   (+ `remark-gfm` for tables/lists, + `rehype-raw` so `<video>`/`<img>` HTML
   works). Image/video `src` values are resolved by filename via `mediaUrl`; `<a>`
