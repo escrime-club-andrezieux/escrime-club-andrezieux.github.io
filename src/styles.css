@@ -1,0 +1,314 @@
+/*
+  Base styles for the one-pager. Plain CSS on purpose: easy to read, nothing
+  to compile, and kept separate from the text content so editing markdown can
+  never break the layout.
+
+  The real design (colors, fonts, spacing) will be filled in once the look is
+  decided. These are sensible, neutral defaults to build on.
+*/
+
+:root {
+  /* ====================================================================
+     CHARTE GRAPHIQUE — LES 3 COULEURS DU SITE
+     C'est le seul endroit à modifier pour changer les couleurs.
+     Changez une valeur ici et tout le site se met à jour.
+     ==================================================================== */
+  --color-white: #ffffff; /* Fonds */
+  --color-blue: #103a8e; /* Couleur principale */
+  --color-red: #d4202a; /* Couleur secondaire */
+
+  /* --- Rôles des couleurs (construits à partir des 3 couleurs ci-dessus).
+         En général, rien à changer ici : modifiez les 3 valeurs au-dessus. --- */
+  --color-bg: var(--color-white); /* fond des sections */
+  --color-bg-alt: var(--color-white); /* fond alterné (mettez une teinte pour
+                                          distinguer une section sur deux) */
+  --color-text: var(--color-blue); /* texte courant */
+  --color-heading: var(--color-blue); /* titres */
+  --color-link: var(--color-red); /* liens & accents */
+  --color-primary: var(--color-blue);
+  --color-secondary: var(--color-red);
+
+  --content-width: 800px;
+  --section-padding: 4rem 1.5rem;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+}
+
+.page {
+  width: 100%;
+}
+
+/* --- En-tête du site (haut de page) --- */
+.site-header {
+  /* L'image de bannière vient de content/banniere.png : elle est appliquée par
+     le composant Header via la variable --header-banner. Pour la changer,
+     remplacez simplement ce fichier. */
+  background-color: var(--color-blue); /* couleur de repli, le temps du chargement */
+  background-image: var(--header-banner, none);
+  background-size: cover;
+  background-position: center;
+}
+
+.site-header-inner {
+  /* Pleine largeur : le logo et le titre se calent à gauche de la bande. */
+  padding: 1.5rem 2rem;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5rem 2rem;
+}
+
+.site-logo {
+  max-height: 160px;
+  width: auto;
+  height: auto;
+  display: block;
+  background: var(--color-white);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4);
+}
+
+/* Nom du club, à côté du logo, en blanc sur la bannière. */
+.site-title {
+  margin: 0;
+  color: var(--color-white);
+  font-size: clamp(1.6rem, 4.5vw, 2.75rem);
+  line-height: 1.15;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+/* --- Barre de menu (sous l'en-tête, collante en haut au défilement) --- */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-primary);
+}
+
+/* Décalage pour que les titres ne passent pas sous le menu collant
+   quand on clique sur un lien du menu. ~ hauteur de la barre de menu. */
+.section,
+.site-footer {
+  scroll-margin-top: 4rem;
+}
+
+.site-nav-list {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 2rem;
+}
+
+.site-nav-list a {
+  display: inline-block;
+  padding: 0.9rem 0.25rem;
+  color: var(--color-white);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 3px solid transparent; /* réserve la place du soulignement */
+}
+
+.site-nav-list a:hover,
+.site-nav-list a:focus-visible {
+  border-bottom-color: var(--color-secondary); /* accent rouge au survol */
+}
+
+/* Each markdown file renders inside one of these sections. */
+.section {
+  padding: var(--section-padding);
+}
+
+.section:nth-child(even) {
+  background: var(--color-bg-alt);
+}
+
+.section-inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+/* --- Markdown content --- */
+
+.section-inner h1,
+.section-inner h2,
+.section-inner h3 {
+  line-height: 1.2;
+  margin-top: 0;
+  color: var(--color-heading);
+}
+
+.section-inner h1 {
+  font-size: 2.5rem;
+}
+
+.section-inner a {
+  color: var(--color-link);
+}
+
+/* Media always fits its container — a non-editor can't break the layout by
+   adding a large photo or video. */
+.section-inner img,
+.section-inner video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+/* Grille de photos : côte à côte sur grand écran, empilées sur mobile.
+   Ajoutez/retirez des <img> dans le markdown, la mise en page s'adapte. */
+.section-inner .photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  /* Photos en grand : on élargit le bloc au-delà de la colonne de texte
+     (800px) pour occuper toute la largeur de la section. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding-inline: 1.5rem;
+}
+
+/* Toutes les photos à la même taille, remplissant leur cellule. */
+.section-inner .photo-grid img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  margin: 0;
+}
+
+/* --- Vidéo de présentation (intégrée depuis YouTube/Vimeo) ---
+   Cadre responsive au format 16:9 : la vidéo garde ses proportions sur tous
+   les écrans. Le lien se règle dans content/textes/video.md. */
+.video-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+  border-radius: 8px;
+}
+
+.section-inner table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.section-inner th,
+.section-inner td {
+  border: 1px solid #ddd;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+/* --- Diaporama photos (pleine largeur, défilement continu) ---
+   Affiche les photos entières (non rognées), les unes à côté des autres,
+   redimensionnées à la hauteur de la bande, qui défilent en boucle. */
+.slideshow {
+  width: 100%;
+  min-height: 50vh; /* au moins la moitié de la hauteur de l'écran */
+  overflow: hidden;
+  background: var(--color-blue);
+}
+
+.slideshow-track {
+  display: flex;
+  height: 50vh;
+  width: max-content;
+  /* la durée est fournie par le composant (selon le nombre de photos) */
+  animation: slideshow-scroll linear infinite;
+}
+
+.slideshow-slide {
+  flex: 0 0 auto;
+  height: 100%;
+}
+
+/* Photo entière : mise à la hauteur de la bande, largeur proportionnelle. */
+.slideshow-slide img {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+@keyframes slideshow-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%); /* une copie complète => boucle sans saut */
+  }
+}
+
+/* Respecte la préférence "réduire les animations". */
+@media (prefers-reduced-motion: reduce) {
+  .slideshow-track {
+    animation: none;
+  }
+}
+
+/* --- Pied de page : fond bleu, texte blanc, infos de contact --- */
+.site-footer {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.site-footer-inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.site-footer-inner > :first-child {
+  margin-top: 0;
+}
+
+/* Force le blanc : les titres et les liens ont sinon leurs propres couleurs. */
+.site-footer-inner h1,
+.site-footer-inner h2,
+.site-footer-inner h3,
+.site-footer-inner a {
+  color: var(--color-white);
+}
+
+@media (max-width: 600px) {
+  :root {
+    --section-padding: 2.5rem 1.25rem;
+  }
+
+  .section-inner h1 {
+    font-size: 2rem;
+  }
+
+  .site-header-inner {
+    min-height: 225px;
+  }
+
+  .site-logo {
+    max-height: 110px;
+  }
+}

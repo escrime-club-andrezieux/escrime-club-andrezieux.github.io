@@ -1,0 +1,70 @@
+# =====================================================================
+#  Publication automatique du site sur GitHub Pages
+# ---------------------------------------------------------------------
+#  À chaque modification envoyée (push) sur la branche `main`, GitHub
+#  reconstruit le site et le met en ligne tout seul. Rien à faire à la
+#  main : il suffit de pousser vos changements de contenu.
+#
+#  À FAIRE UNE SEULE FOIS sur GitHub :
+#    Settings  ->  Pages  ->  Build and deployment  ->  Source  ->
+#    choisir « GitHub Actions ».
+# =====================================================================
+name: Déployer le site sur GitHub Pages
+
+on:
+  # Déploie automatiquement à chaque push sur main.
+  push:
+    branches: [main]
+  # Permet aussi de relancer le déploiement à la main depuis l'onglet Actions.
+  workflow_dispatch:
+
+# Droits nécessaires au déploiement Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un seul déploiement à la fois ; on annule celui en cours s'il y en a un.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Construire le site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Construire le site (dossier dist/)
+        run: npm run build
+
+      - name: Préparer Pages
+        uses: actions/configure-pages@v5
+
+      - name: Téléverser le site construit
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Mettre en ligne
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

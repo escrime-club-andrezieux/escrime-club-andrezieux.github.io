@@ -1,0 +1,13 @@
+node_modules
+dist
+dist-ssr
+site-a-publier
+*.local
+.DS_Store
+
+# Editor / tooling
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.log
+npm-debug.log*
